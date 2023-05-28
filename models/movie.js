@@ -24,7 +24,6 @@ const movieSchema = new mongoose.Schema({
   },
   image: {
     type: String,
-    default: 'https://pictures.s3.yandex.net/resources/jacques-cousteau_1604399756.png',
     validate: {
       validator: (image) => urlRegExp.test(image),
       message: 'Некорректный URL',
@@ -33,7 +32,6 @@ const movieSchema = new mongoose.Schema({
   },
   trailerLink: {
     type: String,
-    default: 'https://pictures.s3.yandex.net/resources/jacques-cousteau_1604399756.png',
     validate: {
       validator: (trailerLink) => urlRegExp.test(trailerLink),
       message: 'Некорректный URL',
@@ -42,7 +40,6 @@ const movieSchema = new mongoose.Schema({
   },
   thumbnail: {
     type: String,
-    default: 'https://pictures.s3.yandex.net/resources/jacques-cousteau_1604399756.png',
     validate: {
       validator: (trailerLink) => urlRegExp.test(trailerLink),
       message: 'Некорректный URL',
@@ -62,15 +59,15 @@ const movieSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator: (nameRu) => ruLengRegExp.test(nameRu),
-      message: 'Название может содердать только буквы в кириллице',
+      message: 'Название может содержать только буквы в кириллице',
     },
   },
   nameEn: {
     type: String,
-    required: true,
+    required: [true, 'Название может содержать только буквы в кириллице'],
     validate: {
       validator: (nameEn) => enLengRegExp.test(nameEn),
-      message: 'Название может содердать только буквы в кириллице',
+      message: 'Название может содержать только буквы в кириллице',
     },
   },
 });
