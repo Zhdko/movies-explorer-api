@@ -72,14 +72,19 @@ const findUser = (req, res, next) => {
     .catch(next);
 };
 
-const findAndUpdate = (req, data, res, next) => {
+const findAndUpdate = (req, res, next) => {
   const id = req.user._id;
   const { name, email } = req.body;
 
   User.findByIdAndUpdate(id, { name, email }, { new: true, runValidators: true })
     .orFail(() => next(new NotFoundError(USER_NOT_FOUND)))
     .then((user) => res.send(user))
-    .catch(next);
+    .catch((err) => {
+      if (err.code === 11000) {
+        next(new RegisterError(WRONG_EMAIL));
+      }
+      next(err);
+    });
 };
 
 module.exports = {
