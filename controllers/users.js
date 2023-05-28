@@ -7,12 +7,12 @@ const User = require('../models/user');
 const RegisterError = require('../Errors/RegisterError');
 const RequestError = require('../Errors/RequestError');
 const {
-  secretKey,
   BAD_REQUEST,
   WRONG_EMAIL,
   SUCCESSFUL_LOGIN,
   USER_NOT_FOUND,
 } = require('../utils/constants');
+const { SECRET_KEY } = require('../utils/config');
 
 const createUser = (req, res, next) => {
   const { email, password, name } = req.body;
@@ -45,7 +45,7 @@ const login = (req, res, next) => {
 
   return User.findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwt.sign({ _id: user.id }, secretKey, { expiresIn: '7d' });
+      const token = jwt.sign({ _id: user.id }, SECRET_KEY, { expiresIn: '7d' });
       res
         .cookie('jwt', token, {
           maxAge: 3600000 * 24 * 7,

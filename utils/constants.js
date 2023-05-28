@@ -1,10 +1,6 @@
-const { NODE_ENV, JWT_SECRET } = process.env;
-require('dotenv').config();
-
 const urlRegExp = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)/;
 const ruLengRegExp = /^[А-Яа-яёЁ\s]+$/;
 const enLengRegExp = /^[A-Za-z\s]/;
-const secretKey = NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret';
 
 const BAD_REQUEST = 'Переданы неккоректные данные';
 const WRONG_EMAIL = 'Email уже используется';
@@ -19,8 +15,10 @@ const WRONG_LENG_ERROR = 'Это поле может содержать толь
 const REQUIRED_ERROR = 'Поле {#label} является обязательным';
 const MIN_LENGTH_ERROR = 'Поле {#label} не может содержать меньше {#limit} символов';
 const MAX_LENGTH_ERROR = 'Поле {#label} не может содержать больше {#limit} символов';
+const WRONG_EMAIL_PASSWORD = 'Неправильные почта или пароль';
 
 module.exports = {
+  WRONG_EMAIL_PASSWORD,
   MIN_LENGTH_ERROR,
   MAX_LENGTH_ERROR,
   REQUIRED_ERROR,
@@ -35,7 +33,6 @@ module.exports = {
   WRONG_EMAIL,
   BAD_REQUEST,
   urlRegExp,
-  secretKey,
   ruLengRegExp,
   enLengRegExp,
 };

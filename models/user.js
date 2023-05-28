@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const validator = require('validator');
-const { v4: uuidv4 } = require('uuid');
 const AuthorizationError = require('../Errors/AuthorizationError');
+const { WRONG_EMAIL_PASSWORD } = require('../utils/constants');
 
 const userSchema = new mongoose.Schema({
   email: {
@@ -23,8 +23,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     minlength: 2,
     maxlength: 30,
-    default: () => uuidv4().substring(0, 8),
-    unique: true,
+    required: true,
   },
 });
 
@@ -33,12 +32,12 @@ userSchema.statics.findUserByCredentials = function (email, password) {
     .select('+password')
     .then((user) => {
       if (!user) {
-        return Promise.reject(new AuthorizationError('Неправильные почта или пароль'));
+        return Promise.reject(new AuthorizationError(WRONG_EMAIL_PASSWORD));
       }
 
       return bcrypt.compare(password, user.password).then((matched) => {
         if (!matched) {
-          return Promise.reject(new AuthorizationError('Неправильные почта или пароль'));
+          return Promise.reject(new AuthorizationError(WRONG_EMAIL_PASSWORD));
         }
 
         return user;

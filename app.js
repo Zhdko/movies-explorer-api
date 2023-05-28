@@ -11,21 +11,10 @@ const app = express();
 const { routers } = require('./routers');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { errorsHandler } = require('./middlewares/errorsHandler');
+const { MONGO_DB, PORT, CORS_OPTIONS } = require('./utils/config');
 
-const { PORT = 3000, DB = 'mongodb://127.0.0.1:27017/bitfilmsdb' } = process.env;
-
-mongoose.connect(DB, { useNewUrlParser: true });
-app.use(
-  cors({
-    credentials: true,
-    origin: [
-      'https://zhdko.movies.nomoredomains.rocks',
-      'http://zhdko.movies.nomoredomains.rocks',
-      'http://localhost:3001',
-    ],
-    exposedHeaders: ['set-cookie'],
-  }),
-);
+mongoose.connect(MONGO_DB, { useNewUrlParser: true });
+app.use(cors(CORS_OPTIONS));
 
 app.listen(PORT);
 

@@ -70,7 +70,7 @@ const movieSchema = new mongoose.Schema({
   },
   nameEn: {
     type: String,
-    required: [true, 'Название может содержать только буквы в кириллице'],
+    required: true,
     validate: {
       validator: (nameEn) => enLengRegExp.test(nameEn),
       message: `${WRONG_LENG_ERROR} латиницы`,
