@@ -31,11 +31,10 @@ const validateLogin = celebrate({
 
 const validateUpdateUser = celebrate({
   body: Joi.object().keys({
-    name: Joi.string().required().min(2).max(30),
-    email: Joi.string().required().email(),
+    name: Joi.string().min(2).max(30),
+    email: Joi.string().email(),
   })
     .messages({
-      'any.required': REQUIRED_ERROR,
       'string.min': MIN_LENGTH_ERROR,
       'string.max': MAX_LENGTH_ERROR,
     }),
