@@ -1,6 +1,7 @@
 const ConflictError = require('../Errors/ConflictError');
 const NotFoundError = require('../Errors/NotFoundError');
 const Movie = require('../models/movie');
+const { MOVIE_NOT_FOUND, FORBIDDEN_DELETE_MOVIE } = require('../utils/constants');
 
 const getAllMovies = (req, res, next) => {
   Movie.find({})
@@ -41,7 +42,7 @@ const createMovie = (req, res, next) => {
     nameEn,
   })
     .then((movie) => {
-      if (!movie) throw new NotFoundError('Фильм не был добавлен');
+      if (!movie) throw new NotFoundError(MOVIE_NOT_FOUND);
       movie
         .populate('owner')
         .then((movieInfo) => res.status(201).send(movieInfo))
@@ -52,10 +53,10 @@ const createMovie = (req, res, next) => {
 
 const deleteMovie = (req, res, next) => {
   Movie.findById(req.params.movieId)
-    .orFail(() => next(new NotFoundError('Фильм по указанному id не найден')))
+    .orFail(() => next(new NotFoundError(MOVIE_NOT_FOUND)))
     .then((movie) => {
       if (req.user._id !== movie.owner.toString()) {
-        throw new ConflictError('Вы не можете удалить фильм другого пользователя');
+        throw new ConflictError(FORBIDDEN_DELETE_MOVIE);
       }
       movie
         .deleteOne()

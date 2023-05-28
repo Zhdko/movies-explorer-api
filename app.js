@@ -3,6 +3,9 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 const cors = require('cors');
 const { errors } = require('celebrate');
+const cookieParser = require('cookie-parser');
+const helmet = require('helmet');
+const { limiter } = require('./middlewares/rateLimit');
 
 const app = express();
 const { routers } = require('./routers');
@@ -16,8 +19,9 @@ app.use(
   cors({
     credentials: true,
     origin: [
-      'https://mesto.zhdko.nomoredomains.monster',
-      'http://mesto.zhdko.nomoredomains.monster',
+      'https://zhdko.movies.nomoredomains.rocks',
+      'http://zhdko.movies.nomoredomains.rocks',
+      'http://localhost:3001',
     ],
     exposedHeaders: ['set-cookie'],
   }),
@@ -25,10 +29,16 @@ app.use(
 
 app.listen(PORT);
 
-routers.use(requestLogger);
+app.use(helmet());
+app.use(cookieParser());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(limiter);
+
+app.use(requestLogger);
 
 app.use(routers);
 
-routers.use(errorLogger);
-routers.use(errors());
-routers.use(errorsHandler);
+app.use(errorLogger);
+app.use(errors());
+app.use(errorsHandler);

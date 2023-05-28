@@ -6,7 +6,13 @@ const NotFoundError = require('../Errors/NotFoundError');
 const User = require('../models/user');
 const RegisterError = require('../Errors/RegisterError');
 const RequestError = require('../Errors/RequestError');
-const { secretKey } = require('../utils/constants');
+const {
+  secretKey,
+  BAD_REQUEST,
+  WRONG_EMAIL,
+  SUCCESSFUL_LOGIN,
+  USER_NOT_FOUND,
+} = require('../utils/constants');
 
 const createUser = (req, res, next) => {
   const { email, password, name } = req.body;
@@ -24,9 +30,9 @@ const createUser = (req, res, next) => {
       })
       .catch((err) => {
         if (err.code === 11000) {
-          next(new RegisterError('Email уже используется'));
+          next(new RegisterError(WRONG_EMAIL));
         } else if (err instanceof mongoose.Error.ValidationError) {
-          next(new RequestError('Переданы неккоректные данные'));
+          next(new RequestError(BAD_REQUEST));
         } else {
           next(err);
         }
@@ -54,14 +60,14 @@ const login = (req, res, next) => {
 
 const logout = (req, res) => {
   res.clearCookie('jwt');
-  res.status(200).send({ message: 'Вы успешно вышли' });
+  res.status(200).send({ message: SUCCESSFUL_LOGIN });
   res.end();
 };
 
 const findUser = (req, res, next) => {
   const id = req.user._id;
   User.findById(id)
-    .orFail(() => next(new NotFoundError('Пользователь по указанному id не найден')))
+    .orFail(() => next(new NotFoundError(USER_NOT_FOUND)))
     .then((user) => res.send(user))
     .catch(next);
 };
@@ -69,7 +75,7 @@ const findUser = (req, res, next) => {
 const findAndUpdate = (req, data, res, next) => {
   const id = req.user._id;
   User.findByIdAndUpdate(id, data, { new: true, runValidators: true })
-    .orFail(() => next(new NotFoundError('Пользователь по указанному id не найден')))
+    .orFail(() => next(new NotFoundError(USER_NOT_FOUND)))
     .then((user) => res.send(user))
     .catch(next);
 };

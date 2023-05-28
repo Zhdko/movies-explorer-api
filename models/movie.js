@@ -1,5 +1,11 @@
 const mongoose = require('mongoose');
-const { urlRegExp, ruLengRegExp, enLengRegExp } = require('../utils/constants');
+const {
+  urlRegExp,
+  ruLengRegExp,
+  enLengRegExp,
+  WRONG_LENG_ERROR,
+  BAD_URL,
+} = require('../utils/constants');
 
 const movieSchema = new mongoose.Schema({
   country: {
@@ -26,7 +32,7 @@ const movieSchema = new mongoose.Schema({
     type: String,
     validate: {
       validator: (image) => urlRegExp.test(image),
-      message: 'Некорректный URL',
+      message: BAD_URL,
     },
     required: true,
   },
@@ -34,7 +40,7 @@ const movieSchema = new mongoose.Schema({
     type: String,
     validate: {
       validator: (trailerLink) => urlRegExp.test(trailerLink),
-      message: 'Некорректный URL',
+      message: BAD_URL,
     },
     required: true,
   },
@@ -42,7 +48,7 @@ const movieSchema = new mongoose.Schema({
     type: String,
     validate: {
       validator: (trailerLink) => urlRegExp.test(trailerLink),
-      message: 'Некорректный URL',
+      message: BAD_URL,
     },
     required: true,
   },
@@ -59,7 +65,7 @@ const movieSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator: (nameRu) => ruLengRegExp.test(nameRu),
-      message: 'Название может содержать только буквы в кириллице',
+      message: `${WRONG_LENG_ERROR} кирилицы`,
     },
   },
   nameEn: {
@@ -67,7 +73,7 @@ const movieSchema = new mongoose.Schema({
     required: [true, 'Название может содержать только буквы в кириллице'],
     validate: {
       validator: (nameEn) => enLengRegExp.test(nameEn),
-      message: 'Название может содержать только буквы в кириллице',
+      message: `${WRONG_LENG_ERROR} латиницы`,
     },
   },
 });
