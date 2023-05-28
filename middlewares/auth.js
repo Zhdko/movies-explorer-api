@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const AuthorizationError = require('../Errors/AuthorizationError');
-const { secretKey, NOT_AUTHORIZATION } = require('../utils/constants');
+const { NOT_AUTHORIZATION } = require('../utils/constants');
+const { SECRET_KEY } = require('../utils/config');
 require('dotenv').config();
 
 module.exports = (req, res, next) => {
@@ -12,7 +13,7 @@ module.exports = (req, res, next) => {
 
   let payload;
   try {
-    payload = jwt.verify(token, secretKey);
+    payload = jwt.verify(token, SECRET_KEY);
   } catch (err) {
     return next(new AuthorizationError(NOT_AUTHORIZATION));
   }
