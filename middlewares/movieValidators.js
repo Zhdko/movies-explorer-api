@@ -1,12 +1,5 @@
 const { celebrate, Joi } = require('celebrate');
-const {
-  urlRegExp,
-  ruLengRegExp,
-  enLengRegExp,
-  BAD_URL,
-  WRONG_LENG_ERROR,
-  REQUIRED_ERROR,
-} = require('../utils/constants');
+const { urlRegExp, BAD_URL, REQUIRED_ERROR } = require('../utils/constants');
 
 const validateCreateMovie = celebrate({
   body: Joi.object().keys({
@@ -19,8 +12,8 @@ const validateCreateMovie = celebrate({
     trailerLink: Joi.string().required().pattern(urlRegExp).message(BAD_URL),
     thumbnail: Joi.string().required().pattern(urlRegExp).message(BAD_URL),
     movieId: Joi.number().required(),
-    nameRu: Joi.string().required().pattern(ruLengRegExp).message(`${WRONG_LENG_ERROR} кирилицы`),
-    nameEn: Joi.string().required().pattern(enLengRegExp).message(`${WRONG_LENG_ERROR} латиницы`),
+    nameRU: Joi.string().required(),
+    nameEN: Joi.string().required(),
   })
     .messages({
       'any.required': REQUIRED_ERROR,

@@ -21,10 +21,10 @@ app.use(helmet());
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(limiter);
 
 app.use(requestLogger);
 
+app.use(limiter);
 app.use(routers);
 
 app.use(errorLogger);

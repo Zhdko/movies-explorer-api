@@ -9,7 +9,7 @@ const validateCreateUser = celebrate({
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30).required(),
     email: Joi.string().required().email(),
-    password: Joi.string().required().min(8),
+    password: Joi.string().required(),
   })
     .messages({
       'any.required': REQUIRED_ERROR,
@@ -21,18 +21,17 @@ const validateCreateUser = celebrate({
 const validateLogin = celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
-    password: Joi.string().required().min(8),
+    password: Joi.string().required(),
   })
     .messages({
       'any.required': REQUIRED_ERROR,
-      'string.min': MIN_LENGTH_ERROR,
     }),
 });
 
 const validateUpdateUser = celebrate({
   body: Joi.object().keys({
-    name: Joi.string().min(2).max(30),
-    email: Joi.string().email(),
+    name: Joi.string().min(2).max(30).required(),
+    email: Joi.string().email().required(),
   })
     .messages({
       'string.min': MIN_LENGTH_ERROR,

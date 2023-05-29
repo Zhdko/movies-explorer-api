@@ -6,16 +6,17 @@ const { login, createUser, logout } = require('../controllers/users');
 const { validateLogin, validateCreateUser } = require('../middlewares/userValidation');
 
 const NotFoundError = require('../Errors/NotFoundError');
+const { BAD_URL } = require('../utils/constants');
 
 routers.post('/signup', validateCreateUser, createUser);
 routers.post('/signin', validateLogin, login);
-routers.post('/signout', logout);
+routers.post('/signout', auth, logout);
 
 routers.use('/movies', auth, movieRouter);
 routers.use('/users', auth, userRouter);
 
-routers.use((req, res, next) => {
-  next(new NotFoundError('Такого URL не существует'));
+routers.use(auth, (req, res, next) => {
+  next(new NotFoundError(BAD_URL));
 });
 
 module.exports = { routers };

@@ -1,9 +1,6 @@
 const mongoose = require('mongoose');
 const {
   urlRegExp,
-  ruLengRegExp,
-  enLengRegExp,
-  WRONG_LENG_ERROR,
   BAD_URL,
 } = require('../utils/constants');
 
@@ -60,21 +57,13 @@ const movieSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  nameRu: {
+  nameRU: {
     type: String,
     required: true,
-    validate: {
-      validator: (nameRu) => ruLengRegExp.test(nameRu),
-      message: `${WRONG_LENG_ERROR} кирилицы`,
-    },
   },
-  nameEn: {
+  nameEN: {
     type: String,
     required: true,
-    validate: {
-      validator: (nameEn) => enLengRegExp.test(nameEn),
-      message: `${WRONG_LENG_ERROR} латиницы`,
-    },
   },
 });
 

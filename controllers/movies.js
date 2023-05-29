@@ -21,8 +21,8 @@ const createMovie = (req, res, next) => {
     trailerLink,
     thumbnail,
     movieId,
-    nameRu,
-    nameEn,
+    nameRU,
+    nameEN,
   } = req.body;
 
   const movieOwner = req.user;
@@ -38,11 +38,10 @@ const createMovie = (req, res, next) => {
     thumbnail,
     owner: movieOwner,
     movieId,
-    nameRu,
-    nameEn,
+    nameRU,
+    nameEN,
   })
     .then((movie) => {
-      if (!movie) throw new NotFoundError(MOVIE_NOT_FOUND);
       movie
         .populate('owner')
         .then((movieInfo) => res.status(201).send(movieInfo))
