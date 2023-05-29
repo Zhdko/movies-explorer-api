@@ -34,6 +34,7 @@ const validateUpdateUser = celebrate({
     email: Joi.string().email().required(),
   })
     .messages({
+      'any.required': REQUIRED_ERROR,
       'string.min': MIN_LENGTH_ERROR,
       'string.max': MAX_LENGTH_ERROR,
     }),
