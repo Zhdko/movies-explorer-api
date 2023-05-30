@@ -13,8 +13,10 @@ const REQUIRED_ERROR = 'Поле {#label} является обязательн�
 const MIN_LENGTH_ERROR = 'Поле {#label} не может содержать меньше {#limit} символов';
 const MAX_LENGTH_ERROR = 'Поле {#label} не может содержать больше {#limit} символов';
 const WRONG_EMAIL_PASSWORD = 'Неправильные почта или пароль';
+const EMPTY_MOVIES_LIST = 'Список фильмов пуст. Добавьте фильмы в избранное, чтобы они отобразились тут';
 
 module.exports = {
+  EMPTY_MOVIES_LIST,
   WRONG_EMAIL_PASSWORD,
   MIN_LENGTH_ERROR,
   MAX_LENGTH_ERROR,

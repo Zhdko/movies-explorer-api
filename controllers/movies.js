@@ -1,12 +1,19 @@
 const ConflictError = require('../Errors/ConflictError');
 const NotFoundError = require('../Errors/NotFoundError');
 const Movie = require('../models/movie');
-const { MOVIE_NOT_FOUND, FORBIDDEN_DELETE_MOVIE } = require('../utils/constants');
+const { MOVIE_NOT_FOUND, FORBIDDEN_DELETE_MOVIE, EMPTY_MOVIES_LIST } = require('../utils/constants');
 
 const getAllMovies = (req, res, next) => {
-  Movie.find({})
-    .populate('owner')
-    .then((movies) => res.send(movies))
+  const owner = req.user._id;
+
+  Movie.find({ owner })
+    .then((result) => {
+      const movies = result.length === 0 ? { message: EMPTY_MOVIES_LIST } : result;
+      res.send(movies);
+    })
+    .catch(() => {
+      throw new NotFoundError(MOVIE_NOT_FOUND);
+    })
     .catch(next);
 };
 
