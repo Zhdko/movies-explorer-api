@@ -1,22 +1,24 @@
-const urlRegExp = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)/;
+const urlRegExp =
+  /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)/;
 
 const BAD_REQUEST = 'Переданы неккоректные данные';
 const WRONG_EMAIL = 'Email уже используется';
 const SUCCESSFUL_LOGOUT = 'Успешный выход';
 const USER_NOT_FOUND = 'Пользователь не найден';
 const MOVIE_NOT_FOUND = 'Фильм не найден';
-const FORBIDDEN_DELETE_MOVIE = 'Вы не можите удалить фильм другого пользователя';
+const FORBIDDEN_DELETE_MOVIE =
+  'Вы не можите удалить фильм другого пользователя';
 const NOT_AUTHORIZATION = 'Необходима авторизация';
 const SERVER_ERROR = 'Ошибка сервера';
 const BAD_URL = 'Такого URL не существует';
 const REQUIRED_ERROR = 'Поле {#label} является обязательным';
-const MIN_LENGTH_ERROR = 'Поле {#label} не может содержать меньше {#limit} символов';
-const MAX_LENGTH_ERROR = 'Поле {#label} не может содержать больше {#limit} символов';
+const MIN_LENGTH_ERROR =
+  'Поле {#label} не может содержать меньше {#limit} символов';
+const MAX_LENGTH_ERROR =
+  'Поле {#label} не может содержать больше {#limit} символов';
 const WRONG_EMAIL_PASSWORD = 'Неправильные почта или пароль';
-const EMPTY_MOVIES_LIST = 'Список фильмов пуст. Добавьте фильмы в избранное, чтобы они отобразились тут';
 
 module.exports = {
-  EMPTY_MOVIES_LIST,
   WRONG_EMAIL_PASSWORD,
   MIN_LENGTH_ERROR,
   MAX_LENGTH_ERROR,
