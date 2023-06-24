@@ -1,8 +1,5 @@
 const mongoose = require('mongoose');
-const {
-  urlRegExp,
-  BAD_URL,
-} = require('../utils/constants');
+const { urlRegExp, BAD_URL } = require('../utils/constants');
 
 const movieSchema = new mongoose.Schema({
   country: {

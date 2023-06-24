@@ -6,11 +6,12 @@ const {
 } = require('../utils/constants');
 
 const validateCreateUser = celebrate({
-  body: Joi.object().keys({
-    name: Joi.string().min(2).max(30).required(),
-    email: Joi.string().required().email(),
-    password: Joi.string().required(),
-  })
+  body: Joi.object()
+    .keys({
+      name: Joi.string().min(2).max(30).required(),
+      email: Joi.string().required().email(),
+      password: Joi.string().required(),
+    })
     .messages({
       'any.required': REQUIRED_ERROR,
       'string.min': MIN_LENGTH_ERROR,
@@ -19,20 +20,22 @@ const validateCreateUser = celebrate({
 });
 
 const validateLogin = celebrate({
-  body: Joi.object().keys({
-    email: Joi.string().required().email(),
-    password: Joi.string().required(),
-  })
+  body: Joi.object()
+    .keys({
+      email: Joi.string().required().email(),
+      password: Joi.string().required(),
+    })
     .messages({
       'any.required': REQUIRED_ERROR,
     }),
 });
 
 const validateUpdateUser = celebrate({
-  body: Joi.object().keys({
-    name: Joi.string().min(2).max(30).required(),
-    email: Joi.string().email().required(),
-  })
+  body: Joi.object()
+    .keys({
+      name: Joi.string().min(2).max(30).required(),
+      email: Joi.string().email().required(),
+    })
     .messages({
       'any.required': REQUIRED_ERROR,
       'string.min': MIN_LENGTH_ERROR,
