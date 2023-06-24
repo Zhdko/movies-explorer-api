@@ -4,7 +4,7 @@ const { NODE_ENV, JWT_SECRET, DB } = process.env;
 
 const SECRET_KEY = NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret';
 const MONGO_DB = NODE_ENV === 'production' ? DB : 'mongodb://127.0.0.1:27017/bitfilmsdb';
-const PORT = 3001;
+const PORT = 3000;
 
 const ALLOWED_CORS = [
   'https://zhdko.movies.nomoredomains.rocks',
