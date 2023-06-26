@@ -8,14 +8,9 @@ const {
 const validateCreateUser = celebrate({
   body: Joi.object()
     .keys({
-      name: Joi.string().min(2).max(30).required(),
       email: Joi.string().required().email(),
       password: Joi.string().required(),
-    })
-    .messages({
-      'any.required': REQUIRED_ERROR,
-      'string.min': MIN_LENGTH_ERROR,
-      'string.max': MAX_LENGTH_ERROR,
+      name: Joi.string().min(2).max(30).required(),
     }),
 });
 

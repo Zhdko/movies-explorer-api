@@ -7,12 +7,12 @@ const { WRONG_EMAIL_PASSWORD } = require('../utils/constants');
 const userSchema = new mongoose.Schema({
   email: {
     type: String,
-    unique: true,
     required: true,
     validate: {
       validator: (email) => validator.isEmail(email),
       message: 'Почта некорректна',
     },
+    unique: true,
   },
   password: {
     type: String,
